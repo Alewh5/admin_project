@@ -1,0 +1,146 @@
+### panel_admin_dart-main ###
+
+# Miscellaneous
+panel_admin_dart-main/*.class *.log *.pyc *.swp .DS_Store .atom/ .build/ .buildlog/ .history 
+panel_admin_dart.svn/ .swiftpm/ migrate_working_dir/
+
+# IntelliJ related
+panel_admin_dart/*.iml
+panel_admin_dart/*.ipr
+panel_admin_dart/*.iws
+panel_admin_dart/.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+panel_admin_dart/**/doc/api/
+panel_admin_dart/**/ios/Flutter/.last_build_id
+panel_admin_dart/.dart_tool/
+panel_admin_dart/.flutter-plugins-dependencies
+panel_admin_dart/.pub-cache/
+panel_admin_dart/.pub/
+panel_admin_dart/build/
+panel_admin_dart/coverage/
+
+# Symbolication related
+panel_admin_dart/app.*.symbols
+
+# Obfuscation related
+panel_admin_dart/app.*.map.json
+
+# Android Studio will place build artifacts here
+panel_admin_dart/android/app/debug
+panel_admin_dart/android/app/profile
+panel_admin_dart/android/app/release
+
+
+# Flutter/Dart/Pub related
+panel_admin_dart/.dart_tool/
+panel_admin_dart/.packages
+panel_admin_dart/.pub-cache/
+panel_admin_dart/.pub/
+panel_admin_dart/build/
+
+# Flutter specific
+panel_admin_dart/.flutter-plugins
+panel_admin_dart/.flutter-plugins-dependencies
+panel_admin_dart/.flutter-versions
+panel_admin_dart/.flutter-plugins
+panel_admin_dart/.flutter-plugins-dependencies
+
+# Generated files
+panel_admin_dart/*.lock
+panel_admin_dart/*.log
+panel_admin_dart/*.tmp
+panel_admin_dart/*.swp
+panel_admin_dart/*.DS_Store
+
+# IntelliJ / Android Studio
+panel_admin_dart/.idea/
+panel_admin_dart/*.iml
+panel_admin_dart/*.ipr
+panel_admin_dart/*.iws
+
+# VS Code
+panel_admin_dart/.vscode/
+
+# Android
+panel_admin_dart/android/app/debug
+panel_admin_dart/android/app/profile
+panel_admin_dart/android/app/release
+panel_admin_dart/android/local.properties
+panel_admin_dart/android/.gradle
+panel_admin_dart/android/captures
+panel_admin_dart/android/gradlew
+panel_admin_dart/android/gradlew.bat
+panel_admin_dart/android/gradle-wrapper.jar
+panel_admin_dart/android/gradle-wrapper.properties
+
+# iOS
+panel_admin_dart/ios/Pods/
+panel_admin_dart/ios/.symlinks/
+panel_admin_dart/ios/Flutter/Flutter.framework
+panel_admin_dart/ios/Flutter/Flutter.podspec
+panel_admin_dart/ios/Flutter/Generated.xcconfig
+panel_admin_dart/ios/Flutter/ephemeral/
+panel_admin_dart/ios/ServiceDefinitions.json
+panel_admin_dart/ios/Runner.xcworkspace/
+
+# macOS
+panel_admin_dart/macos/Pods/
+
+# Linux
+panel_admin_dart/linux/flutter/ephemeral/
+
+# Windows
+panel_admin_dart/windows/flutter/ephemeral/
+
+# Web
+panel_admin_dart/build/web/
+
+# Coverage
+panel_admin_dart/coverage/
+
+# Misc
+panel_admin_dart/*.class
+panel_admin_dart/*.pyc
+panel_admin_dart/*.lock
+
+
+### backend-nodejs ###
+
+# dependencies
+backend-nodejs/node_modules/
+
+# logs
+backend-nodejs/logs
+backend-nodejs/*.log
+backend-nodejs/npm-debug.log*
+backend-nodejs/yarn-debug.log*
+backend-nodejs/yarn-error.log*
+
+# environment variables
+backend-nodejs/.env
+backend-nodejs/.env.local
+backend-nodejs/.env.development.local
+backend-nodejs/.env.test.local
+backend-nodejs/.env.production.local
+
+# build
+backend-nodejs/dist/
+backend-nodejs/build/
+
+# OS
+backend-nodejs/.DS_Store
+backend-nodejs/Thumbs.db
+
+# IDE
+backend-nodejs/.vscode/
+backend-nodejs/.idea/
+
+# temp
+backend-nodejs/tmp/
+backend-nodejs/temp/
