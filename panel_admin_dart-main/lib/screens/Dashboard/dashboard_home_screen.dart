@@ -79,7 +79,6 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ─── Saludo ────────────────────────────────────────────────────
             Text(
               'Bienvenido, ${widget.agentName} 👋',
               style: Theme.of(
@@ -95,7 +94,6 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
             ),
             const SizedBox(height: 24),
 
-            // ─── Tarjetas de métricas ───────────────────────────────────
             LayoutBuilder(
               builder: (context, constraints) {
                 final crossAxisCount = constraints.maxWidth > 700 ? 4 : 2;
@@ -145,7 +143,6 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
             ),
             const SizedBox(height: 32),
 
-            // ─── Lista de chats sin atender ─────────────────────────────
             if (unassigned.isNotEmpty) ...[
               Row(
                 children: [
@@ -202,7 +199,6 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
   }
 }
 
-// ─── Tarjeta de métrica ────────────────────────────────────────────────────────
 class _MetricCard extends StatelessWidget {
   final String label;
   final String value;
@@ -265,7 +261,6 @@ class _MetricCard extends StatelessWidget {
   }
 }
 
-// ─── Tile de chat sin asignar ────────────────────────────────────────────────
 class _UnassignedChatTile extends StatelessWidget {
   final ChatRoom room;
 

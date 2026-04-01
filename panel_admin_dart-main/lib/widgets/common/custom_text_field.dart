@@ -56,9 +56,15 @@ class CustomTextField extends StatelessWidget {
           fontSize: 14,
         ),
         filled: filled,
-        fillColor: fillColor ?? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-        prefixIcon: prefixIcon != null 
-            ? Icon(prefixIcon, color: theme.colorScheme.primary.withValues(alpha: 0.7), size: 20) 
+        fillColor:
+            fillColor ??
+            theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+        prefixIcon: prefixIcon != null
+            ? Icon(
+                prefixIcon,
+                color: theme.colorScheme.primary.withValues(alpha: 0.7),
+                size: 20,
+              )
             : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -66,19 +72,16 @@ class CustomTextField extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: theme.dividerColor,
-            width: 1,
-          ),
+          borderSide: BorderSide(color: theme.dividerColor, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: theme.colorScheme.primary,
-            width: 1.5,
-          ),
+          borderSide: BorderSide(color: theme.colorScheme.primary, width: 1.5),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
       ),
     );
   }

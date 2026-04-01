@@ -20,13 +20,25 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final loginResponse = LoginResponse.fromJson(data);
-        
+
         if (loginResponse.user != null) {
-          await _storage.write(key: 'accessToken', value: loginResponse.accessToken);
-          await _storage.write(key: 'refreshToken', value: loginResponse.refreshToken);
+          await _storage.write(
+            key: 'accessToken',
+            value: loginResponse.accessToken,
+          );
+          await _storage.write(
+            key: 'refreshToken',
+            value: loginResponse.refreshToken,
+          );
           await _storage.write(key: 'role', value: loginResponse.user!.role);
-          await _storage.write(key: 'userId', value: loginResponse.user!.id.toString());
-          await _storage.write(key: 'firstName', value: loginResponse.user!.firstName);
+          await _storage.write(
+            key: 'userId',
+            value: loginResponse.user!.id.toString(),
+          );
+          await _storage.write(
+            key: 'firstName',
+            value: loginResponse.user!.firstName,
+          );
         }
 
         return loginResponse;

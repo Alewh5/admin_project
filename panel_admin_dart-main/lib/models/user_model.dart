@@ -25,7 +25,9 @@ class User {
       lastName: json['lastName'] ?? '',
       role: json['role'] ?? '',
       avatar: json['avatar'],
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
     );
   }
 
@@ -59,7 +61,10 @@ class LoginResponse {
     this.message,
   });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json, {bool successOverride = true}) {
+  factory LoginResponse.fromJson(
+    Map<String, dynamic> json, {
+    bool successOverride = true,
+  }) {
     return LoginResponse(
       success: successOverride,
       accessToken: json['accessToken'],

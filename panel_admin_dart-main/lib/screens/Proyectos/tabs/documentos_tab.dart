@@ -19,7 +19,7 @@ class DocumentosTab extends StatefulWidget {
 class _DocumentosTabState extends State<DocumentosTab> {
   final KanbanService _kanbanService = KanbanService();
   final ScrollController _scrollController = ScrollController();
-  
+
   List<ProjectDocumentModel> _documents = [];
   int _currentPage = 1;
   bool _isLoading = false;
@@ -40,7 +40,8 @@ class _DocumentosTabState extends State<DocumentosTab> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent * 0.9 &&
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent * 0.9 &&
         !_isLoading &&
         _hasMore) {
       _loadDocuments(loadMore: true);
@@ -66,7 +67,7 @@ class _DocumentosTabState extends State<DocumentosTab> {
         page: _currentPage,
         limit: 20,
       );
-      
+
       final newDocs = response['items'] as List<ProjectDocumentModel>;
 
       if (mounted) {
@@ -94,12 +95,15 @@ class _DocumentosTabState extends State<DocumentosTab> {
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      // Mock File Upload Response. In real app, we use http.MultipartRequest in KanbanService
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Subiendo documento...')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Subiendo documento...')));
       await Future.delayed(const Duration(seconds: 1));
-      
-      _loadDocuments(); // Reload documents from API
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Documento subido con éxito')));
+
+      _loadDocuments();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Documento subido con éxito')),
+      );
     }
   }
 
@@ -139,25 +143,26 @@ class _DocumentosTabState extends State<DocumentosTab> {
                     onRetry: _loadDocuments,
                   )
                 : _documents.isEmpty && !_isLoading
-                    ? const EmptyState(
-                        title: 'No hay documentos',
-                        subtitle: 'Arrastra o sube un documento para empezar.',
-                        icon: Icons.insert_drive_file_outlined,
-                      )
-                    : GridView.builder(
-                        controller: _scrollController,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                ? const EmptyState(
+                    title: 'No hay documentos',
+                    subtitle: 'Arrastra o sube un documento para empezar.',
+                    icon: Icons.insert_drive_file_outlined,
+                  )
+                : GridView.builder(
+                    controller: _scrollController,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 4,
                           crossAxisSpacing: 16,
                           mainAxisSpacing: 16,
                           childAspectRatio: 1.0,
                         ),
-                        itemCount: _documents.length,
-                        itemBuilder: (context, index) {
-                          final doc = _documents[index];
-                          return DocumentGridTile(document: doc);
-                        },
-                      ),
+                    itemCount: _documents.length,
+                    itemBuilder: (context, index) {
+                      final doc = _documents[index];
+                      return DocumentGridTile(document: doc);
+                    },
+                  ),
           ),
         ],
       ),

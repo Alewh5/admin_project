@@ -24,7 +24,7 @@ class TaskColumnModel {
       nombre: json['nombre'],
       color: json['color'] ?? '#000000',
       orden: json['orden'] ?? 0,
-      tasks: json['tasks'] != null 
+      tasks: json['tasks'] != null
           ? (json['tasks'] as List).map((t) => TaskModel.fromJson(t)).toList()
           : [],
     );

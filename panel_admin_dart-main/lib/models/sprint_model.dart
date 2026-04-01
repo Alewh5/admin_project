@@ -15,14 +15,16 @@ class SprintModel {
 
   factory SprintModel.fromJson(Map<String, dynamic> json) {
     return SprintModel(
-      id: json['id'] is int ? json['id'] : int.tryParse(json['id'].toString()) ?? 0,
-      proyectoId: json['proyectoId'] is int 
-          ? json['proyectoId'] 
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id'].toString()) ?? 0,
+      proyectoId: json['proyectoId'] is int
+          ? json['proyectoId']
           : int.tryParse(json['proyectoId'].toString()) ?? 0,
       nombre: json['nombre'] ?? 'Sin nombre',
       descripcion: json['descripcion'],
-      estado: json['estado'] is int 
-          ? json['estado'] 
+      estado: json['estado'] is int
+          ? json['estado']
           : int.tryParse(json['estado']?.toString() ?? '0') ?? 0,
     );
   }

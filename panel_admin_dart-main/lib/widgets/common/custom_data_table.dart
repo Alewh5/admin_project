@@ -45,7 +45,10 @@ class CustomDataTable extends StatelessWidget {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 8.0,
+            ),
             child: Card(
               elevation: 0,
               margin: EdgeInsets.zero,
@@ -63,10 +66,15 @@ class CustomDataTable extends StatelessWidget {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: ConstrainedBox(
-                          constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                          constraints: BoxConstraints(
+                            minWidth: constraints.maxWidth,
+                          ),
                           child: DataTable(
                             headingRowColor: WidgetStateProperty.resolveWith(
-                               (states) => theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+                              (states) => theme
+                                  .colorScheme
+                                  .surfaceContainerHighest
+                                  .withOpacity(0.5),
                             ),
                             headingTextStyle: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -79,7 +87,7 @@ class CustomDataTable extends StatelessWidget {
                         ),
                       ),
                     );
-                  }
+                  },
                 ),
               ),
             ),

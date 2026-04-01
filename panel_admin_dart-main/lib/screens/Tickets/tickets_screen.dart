@@ -114,7 +114,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
   }
 
   bool _isStatusPositive(int status) {
-    return status == 2; // Green when closed
+    return status == 2;
   }
 
   IconData _getStatusIcon(int status) {
@@ -237,10 +237,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
             DataCell(
               SizedBox(
                 width: 250,
-                child: Text(
-                  ticket.title,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                child: Text(ticket.title, overflow: TextOverflow.ellipsis),
               ),
             ),
             DataCell(UserAvatarCell(name: visitorName, avatarRadius: 14)),
@@ -267,7 +264,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                               .updateTicketStatus(ticket.id, newStatus);
                           if (success) {
                             setState(() {
-                              _loadTickets(); // Reload or update model
+                              _loadTickets();
                             });
                           }
                         }

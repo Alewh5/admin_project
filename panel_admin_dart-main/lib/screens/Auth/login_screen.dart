@@ -47,9 +47,9 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } else {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(result.message ?? 'Error desconocido')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(result.message ?? 'Error desconocido')),
+        );
       }
     }
   }
@@ -69,7 +69,11 @@ class _LoginScreenState extends State<LoginScreen> {
         const SizedBox(height: 16),
         const Text(
           '¡Bienvenido!',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800, letterSpacing: -0.5),
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.5,
+          ),
         ),
         const SizedBox(height: 32),
         CustomTextField(

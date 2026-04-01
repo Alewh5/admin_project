@@ -48,7 +48,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   String _visitorTypingText = '';
   bool _isInternalNote = false;
 
-  // ESTA ES LA CLAVE: Centralizar el ID correcto
   String get _activeRoomId => widget.room.id;
 
   @override
@@ -664,8 +663,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         : ListView.builder(
                             itemCount: _tickets.length,
                             itemBuilder: (context, index) {
-                              final ticket =
-                                  _tickets[index]; // Ahora es un objeto Ticket
+                              final ticket = _tickets[index];
                               return Card(
                                 margin: const EdgeInsets.only(bottom: 10),
                                 child: Padding(
@@ -835,8 +833,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                                                         child: Material(
                                                           elevation: 16,
                                                           child: TicketDetailScreen(
-                                                            ticket:
-                                                                ticket, // Pasamos el objeto completo
+                                                            ticket: ticket,
                                                             agentName: widget
                                                                 .agentName,
                                                             isReadOnly: widget

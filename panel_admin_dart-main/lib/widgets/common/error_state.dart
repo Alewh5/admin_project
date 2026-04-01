@@ -1,15 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Widget de estado de error reutilizable.
-/// Muestra un ícono, un mensaje y un botón opcional de reintento.
-///
-/// Ejemplo:
-/// ```dart
-/// ErrorState(
-///   message: 'No se pudo cargar el historial.',
-///   onRetry: _loadHistoricalRooms,
-/// )
-/// ```
 class ErrorState extends StatelessWidget {
   final String message;
   final VoidCallback? onRetry;

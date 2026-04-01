@@ -12,7 +12,11 @@ class DocumentGridTile extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.insert_drive_file, size: 48, color: Theme.of(context).iconTheme.color),
+          Icon(
+            Icons.insert_drive_file,
+            size: 48,
+            color: Theme.of(context).iconTheme.color,
+          ),
           const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),

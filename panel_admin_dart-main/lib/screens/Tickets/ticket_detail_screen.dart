@@ -166,7 +166,6 @@ class _TicketDetailScreenState extends State<TicketDetailScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 16.0,
@@ -208,7 +207,6 @@ class _TicketDetailScreenState extends State<TicketDetailScreen>
             ),
           ),
 
-          // Tabs
           Container(
             color: Theme.of(context).cardColor,
             child: TabBar(
@@ -221,18 +219,15 @@ class _TicketDetailScreenState extends State<TicketDetailScreen>
             ),
           ),
 
-          // Tab Content
           Expanded(
             child: TabBarView(
               controller: _tabController,
               children: [
-                // ── TAB 1: DETAILS ──
                 SingleChildScrollView(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Title
                       Text(
                         title,
                         style: const TextStyle(
@@ -242,7 +237,6 @@ class _TicketDetailScreenState extends State<TicketDetailScreen>
                       ),
                       const SizedBox(height: 12),
 
-                      // Description
                       _sectionLabel('Descripción'),
                       const SizedBox(height: 6),
                       Container(
@@ -262,7 +256,6 @@ class _TicketDetailScreenState extends State<TicketDetailScreen>
                       ),
                       const SizedBox(height: 20),
 
-                      // Status
                       if (!widget.isReadOnly) ...[
                         _sectionLabel('Cambiar Estado'),
                         const SizedBox(height: 6),
@@ -305,7 +298,6 @@ class _TicketDetailScreenState extends State<TicketDetailScreen>
                         const SizedBox(height: 20),
                       ],
 
-                      // Replies
                       _sectionLabel('Respuestas (${replies.length})'),
                       const SizedBox(height: 8),
                       if (replies.isEmpty)
@@ -365,7 +357,6 @@ class _TicketDetailScreenState extends State<TicketDetailScreen>
 
                       const SizedBox(height: 20),
 
-                      // Images
                       _sectionLabel('Imágenes Adjuntas'),
                       const SizedBox(height: 8),
                       if (rawImages.isEmpty)

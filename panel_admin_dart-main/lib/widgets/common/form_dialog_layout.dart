@@ -39,7 +39,11 @@ class _FormDialogLayoutState extends State<FormDialogLayout> {
         _isSaving
             ? const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
               )
             : CustomButton(
                 onPressed: () async {
@@ -50,13 +54,15 @@ class _FormDialogLayoutState extends State<FormDialogLayout> {
                   } catch (e) {
                     success = false;
                   }
-                  
+
                   if (success && mounted) {
                     Navigator.pop(context);
                     widget.onSuccess();
                   } else if (mounted) {
                     setState(() => _isSaving = false);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.errorMessage)));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(widget.errorMessage)),
+                    );
                   }
                 },
                 text: widget.saveText,

@@ -166,7 +166,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
       case 3:
         return TicketsScreen(agentRole: _agentRole, agentName: _agentName);
       case 4:
-        return const UsersScreen(); // Ahora la pantalla se maneja sola
+        return const UsersScreen();
       case 6:
         return ProyectosScreen(
           agentRole: _agentRole,

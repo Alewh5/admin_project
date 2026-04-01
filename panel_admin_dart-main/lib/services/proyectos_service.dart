@@ -37,29 +37,32 @@ class ProyectosService {
     return response.statusCode == 200;
   }
 
-  // === EQUIPO / TEAM METHODS ===
-
   Future<List<Map<String, dynamic>>> getProjectTeam(int proyectoId) async {
-    final response = await _client.get(Uri.parse('$_apiUrl/$proyectoId/equipo'));
+    final response = await _client.get(
+      Uri.parse('$_apiUrl/$proyectoId/equipo'),
+    );
     if (response.statusCode == 200) {
       return List<Map<String, dynamic>>.from(json.decode(response.body));
     }
     return [];
   }
 
-  Future<bool> addTeamMember(int proyectoId, int userId, String rolEnProyecto) async {
+  Future<bool> addTeamMember(
+    int proyectoId,
+    int userId,
+    String rolEnProyecto,
+  ) async {
     final response = await _client.post(
       Uri.parse('$_apiUrl/$proyectoId/equipo'),
-      body: jsonEncode({
-        'userId': userId,
-        'rolEnProyecto': rolEnProyecto,
-      }),
+      body: jsonEncode({'userId': userId, 'rolEnProyecto': rolEnProyecto}),
     );
     return response.statusCode == 200 || response.statusCode == 201;
   }
 
   Future<bool> removeTeamMember(int proyectoId, int userId) async {
-    final response = await _client.delete(Uri.parse('$_apiUrl/$proyectoId/equipo/$userId'));
+    final response = await _client.delete(
+      Uri.parse('$_apiUrl/$proyectoId/equipo/$userId'),
+    );
     return response.statusCode == 200;
   }
 }

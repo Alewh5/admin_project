@@ -21,7 +21,9 @@ class UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String initial = name.isNotEmpty ? name.substring(0, 1).toUpperCase() : '?';
-    final defaultBg = Theme.of(context).colorScheme.primary.withValues(alpha: 0.1);
+    final defaultBg = Theme.of(
+      context,
+    ).colorScheme.primary.withValues(alpha: 0.1);
     final defaultText = Theme.of(context).colorScheme.primary;
 
     return Stack(

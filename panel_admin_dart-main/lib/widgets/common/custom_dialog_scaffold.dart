@@ -23,10 +23,7 @@ class CustomDialogScaffold extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       title: Text(title),
       content: SingleChildScrollView(
-        child: SizedBox(
-          width: width,
-          child: content,
-        ),
+        child: SizedBox(width: width, child: content),
       ),
       actions: [
         TextButton(

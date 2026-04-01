@@ -15,12 +15,15 @@ class ChatBubble extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.only(bottom: 8, left: 32, right: 32),
         decoration: BoxDecoration(
-          color: isMe ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).cardColor,
+          color: isMe
+              ? Theme.of(context).colorScheme.primaryContainer
+              : Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
-          crossAxisAlignment:
-              isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: isMe
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
           children: [
             Text(
               comment.user?['firstName'] ?? 'Usuario',
@@ -31,7 +34,10 @@ class ChatBubble extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               comment.createdAt,
-              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 10),
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodySmall?.color,
+                fontSize: 10,
+              ),
             ),
           ],
         ),

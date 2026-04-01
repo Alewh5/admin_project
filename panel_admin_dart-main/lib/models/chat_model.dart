@@ -61,8 +61,8 @@ class ChatMessage {
   final String roomId;
   final String message;
   final String senderId;
-  final String role; // 'visitor' or 'agent'
-  final String type; // 'text', 'image', 'file'
+  final String role;
+  final String type;
   final String? fileUrl;
   final DateTime? createdAt;
 

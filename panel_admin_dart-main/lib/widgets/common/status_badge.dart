@@ -16,8 +16,8 @@ class StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isWarning 
-        ? Colors.orange 
+    final color = isWarning
+        ? Colors.orange
         : (isPositive ? Colors.green : Colors.grey);
 
     return Container(
@@ -29,11 +29,7 @@ class StatusBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon ?? Icons.circle,
-            size: 10,
-            color: color,
-          ),
+          Icon(icon ?? Icons.circle, size: 10, color: color),
           const SizedBox(width: 6),
           Text(
             text,

@@ -11,11 +11,15 @@ class KanbanService {
   final ApiClient _apiClient = ApiClient();
   final String _baseUrl = Constants.baseUrl;
 
-  // === COLUMNS & TASKS ===
-  Future<List<TaskColumnModel>> getProjectColumns(int proyectoId, {int? sprintId}) async {
+  Future<List<TaskColumnModel>> getProjectColumns(
+    int proyectoId, {
+    int? sprintId,
+  }) async {
     final baseApiUrl = '$_baseUrl/kanban/proyectos/$proyectoId/columns';
-    final url = sprintId != null ? '$baseApiUrl?sprintId=$sprintId' : baseApiUrl;
-    
+    final url = sprintId != null
+        ? '$baseApiUrl?sprintId=$sprintId'
+        : baseApiUrl;
+
     final response = await _apiClient.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -26,7 +30,13 @@ class KanbanService {
     }
   }
 
-  Future<TaskModel?> createTask(int proyectoId, int sprintId, int columnId, String titulo, String descripcion) async {
+  Future<TaskModel?> createTask(
+    int proyectoId,
+    int sprintId,
+    int columnId,
+    String titulo,
+    String descripcion,
+  ) async {
     final response = await _apiClient.post(
       Uri.parse('$_baseUrl/kanban/tasks'),
       body: jsonEncode({
@@ -38,7 +48,8 @@ class KanbanService {
         'prioridad': 'Media',
       }),
     );
-    if (response.statusCode == 201) return TaskModel.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 201)
+      return TaskModel.fromJson(jsonDecode(response.body));
     return null;
   }
 
@@ -58,16 +69,23 @@ class KanbanService {
     return response.statusCode == 200;
   }
 
-  // === COMMENTS ===
-  Future<Map<String, dynamic>> getTaskComments(int taskId, {int page = 1, int limit = 20}) async {
+  Future<Map<String, dynamic>> getTaskComments(
+    int taskId, {
+    int page = 1,
+    int limit = 20,
+  }) async {
     final response = await _apiClient.get(
-      Uri.parse('$_baseUrl/kanban/tasks/$taskId/comments?page=$page&limit=$limit'),
+      Uri.parse(
+        '$_baseUrl/kanban/tasks/$taskId/comments?page=$page&limit=$limit',
+      ),
     );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       return {
-        'items': (data['items'] as List).map((t) => TaskCommentModel.fromJson(t)).toList(),
+        'items': (data['items'] as List)
+            .map((t) => TaskCommentModel.fromJson(t))
+            .toList(),
         'totalPages': data['totalPages'],
         'currentPage': data['currentPage'],
       };
@@ -75,24 +93,34 @@ class KanbanService {
     return {'items': <TaskCommentModel>[], 'totalPages': 1, 'currentPage': 1};
   }
 
-  // === DOCUMENTS ===
-  Future<Map<String, dynamic>> getProjectDocuments(int proyectoId, {int page = 1, int limit = 20}) async {
+  Future<Map<String, dynamic>> getProjectDocuments(
+    int proyectoId, {
+    int page = 1,
+    int limit = 20,
+  }) async {
     final response = await _apiClient.get(
-      Uri.parse('$_baseUrl/kanban/proyectos/$proyectoId/documents?page=$page&limit=$limit'),
+      Uri.parse(
+        '$_baseUrl/kanban/proyectos/$proyectoId/documents?page=$page&limit=$limit',
+      ),
     );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       return {
-        'items': (data['items'] as List).map((t) => ProjectDocumentModel.fromJson(t)).toList(),
+        'items': (data['items'] as List)
+            .map((t) => ProjectDocumentModel.fromJson(t))
+            .toList(),
         'totalPages': data['totalPages'],
         'currentPage': data['currentPage'],
       };
     }
-    return {'items': <ProjectDocumentModel>[], 'totalPages': 1, 'currentPage': 1};
+    return {
+      'items': <ProjectDocumentModel>[],
+      'totalPages': 1,
+      'currentPage': 1,
+    };
   }
 
-  // === METRICS ===
   Future<Map<String, dynamic>> getProjectMetrics(int proyectoId) async {
     final response = await _apiClient.get(
       Uri.parse('$_baseUrl/kanban/proyectos/$proyectoId/rendimiento'),
@@ -104,16 +132,23 @@ class KanbanService {
     throw Exception('Failed to load metrics');
   }
 
-  // === PROJECT CHAT ===
-  Future<Map<String, dynamic>> getProjectChat(int proyectoId, {int page = 1, int limit = 30}) async {
+  Future<Map<String, dynamic>> getProjectChat(
+    int proyectoId, {
+    int page = 1,
+    int limit = 30,
+  }) async {
     final response = await _apiClient.get(
-      Uri.parse('$_baseUrl/kanban/proyectos/$proyectoId/chat?page=$page&limit=$limit'),
+      Uri.parse(
+        '$_baseUrl/kanban/proyectos/$proyectoId/chat?page=$page&limit=$limit',
+      ),
     );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       return {
-        'items': (data['items'] as List).map((t) => TaskCommentModel.fromJson(t)).toList(),
+        'items': (data['items'] as List)
+            .map((t) => TaskCommentModel.fromJson(t))
+            .toList(),
         'totalPages': data['totalPages'],
         'currentPage': data['currentPage'],
       };
@@ -121,20 +156,26 @@ class KanbanService {
     return {'items': <TaskCommentModel>[], 'totalPages': 1, 'currentPage': 1};
   }
 
-  Future<TaskCommentModel?> addProjectChat(int proyectoId, int userId, String contenido) async {
+  Future<TaskCommentModel?> addProjectChat(
+    int proyectoId,
+    int userId,
+    String contenido,
+  ) async {
     final response = await _apiClient.post(
       Uri.parse('$_baseUrl/kanban/proyectos/$proyectoId/chat'),
-      body: jsonEncode({
-        'userId': userId,
-        'contenido': contenido,
-      }),
+      body: jsonEncode({'userId': userId, 'contenido': contenido}),
     );
-    if (response.statusCode == 201) return TaskCommentModel.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 201)
+      return TaskCommentModel.fromJson(jsonDecode(response.body));
     return null;
   }
 
-  // === INITIALIZATION & COLUMN MGMT ===
-  Future<bool> createColumn(int proyectoId, String nombre, String color, int orden) async {
+  Future<bool> createColumn(
+    int proyectoId,
+    String nombre,
+    String color,
+    int orden,
+  ) async {
     final response = await _apiClient.post(
       Uri.parse('$_baseUrl/kanban/proyectos/$proyectoId/columns'),
       body: jsonEncode({'nombre': nombre, 'color': color, 'orden': orden}),
@@ -156,10 +197,9 @@ class KanbanService {
     await createColumn(proyectoId, 'Completado', '#66bb6a', 3);
   }
 
-  // === SPRINTS ===
   Future<List<SprintModel>> getSprints(int proyectoId) async {
     final response = await _apiClient.get(
-      Uri.parse('$_baseUrl/kanban/proyectos/$proyectoId/sprints')
+      Uri.parse('$_baseUrl/kanban/proyectos/$proyectoId/sprints'),
     );
     if (response.statusCode == 200) {
       final List data = jsonDecode(response.body);
@@ -168,7 +208,11 @@ class KanbanService {
     return [];
   }
 
-  Future<SprintModel?> createSprint(int proyectoId, String nombre, String descripcion) async {
+  Future<SprintModel?> createSprint(
+    int proyectoId,
+    String nombre,
+    String descripcion,
+  ) async {
     final response = await _apiClient.post(
       Uri.parse('$_baseUrl/kanban/proyectos/$proyectoId/sprints'),
       body: jsonEncode({
@@ -177,8 +221,8 @@ class KanbanService {
         'estado': 0,
       }),
     );
-    if (response.statusCode == 201) return SprintModel.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 201)
+      return SprintModel.fromJson(jsonDecode(response.body));
     return null;
   }
 }
-

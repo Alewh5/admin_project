@@ -117,9 +117,7 @@ class _ProyectosScreenState extends State<ProyectosScreen> {
   void _showProyectoDialog([Proyecto? proyecto]) {
     final isEditing = proyecto != null;
     final nombreController = TextEditingController(text: proyecto?.nombre);
-    final descController = TextEditingController(
-      text: proyecto?.descripcion,
-    );
+    final descController = TextEditingController(text: proyecto?.descripcion);
 
     final availableEncargados = widget.systemUsers ?? [];
     int? selectedEncargado = proyecto?.encargadoProyecto;
@@ -340,142 +338,6 @@ class _ProyectosScreenState extends State<ProyectosScreen> {
     );
   }
 
-  void _showDetallesPanel(Proyecto proyecto) {
-    String assignedName = 'N/A';
-    final int? encargadoId = proyecto.encargadoProyecto;
-    if (encargadoId != null && widget.systemUsers != null) {
-      final userOpt = widget.systemUsers!.firstWhere(
-        (u) => u['id'] == encargadoId,
-        orElse: () => null,
-      );
-      if (userOpt != null) {
-        assignedName = '${userOpt['firstName']} ${userOpt['lastName']}';
-      }
-    }
-
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: 'Cerrar',
-      barrierColor: Colors.black45,
-      transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return Align(
-          alignment: Alignment.centerRight,
-          child: Material(
-            elevation: 16,
-            child: Container(
-              width: 400,
-              height: double.infinity,
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.05),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            proyecto.nombre,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(height: 1, thickness: 1),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Detalles del Proyecto',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          _buildDetailRow(
-                            'Descripción:',
-                            proyecto.descripcion ?? 'N/A',
-                          ),
-                          const Divider(),
-                          _buildDetailRow('Estado:', proyecto.estado),
-                          _buildDetailRow('Encargado:', assignedName),
-                          const Divider(),
-                          _buildDetailRow(
-                            'Inicio Estimado:',
-                            proyecto.estimacionInicio != null
-                                ? DateFormat('dd/MM/yyyy').format(
-                                    proyecto.estimacionInicio!,
-                                  )
-                                : 'N/A',
-                          ),
-                          _buildDetailRow(
-                            'Fin Estimado:',
-                            proyecto.estimacionFin != null
-                                ? DateFormat('dd/MM/yyyy').format(
-                                    proyecto.estimacionFin!,
-                                  )
-                                : 'N/A',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1, 0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: child,
-        );
-      },
-    );
-  }
-
-  Widget _buildDetailRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 120,
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-          Expanded(child: Text(value)),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -568,9 +430,7 @@ class _ProyectosScreenState extends State<ProyectosScreen> {
             DataCell(
               Text(
                 proyecto.estimacionFin != null
-                    ? DateFormat(
-                        'dd/MM/yyyy',
-                      ).format(proyecto.estimacionFin!)
+                    ? DateFormat('dd/MM/yyyy').format(proyecto.estimacionFin!)
                     : 'N/A',
               ),
             ),
@@ -583,21 +443,26 @@ class _ProyectosScreenState extends State<ProyectosScreen> {
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => ProyectoTabsScreen(
-                        proyecto: proyecto,
-                        agentName: widget.agentName,
-                        agentId: widget.agentId,
-                      ),
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        const begin = Offset(1.0, 0.0);
-                        const end = Offset.zero;
-                        const curve = Curves.easeInOut;
-                        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          child: child,
-                        );
-                      },
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          ProyectoTabsScreen(
+                            proyecto: proyecto,
+                            agentName: widget.agentName,
+                            agentId: widget.agentId,
+                          ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(1.0, 0.0);
+                            const end = Offset.zero;
+                            const curve = Curves.easeInOut;
+                            var tween = Tween(
+                              begin: begin,
+                              end: end,
+                            ).chain(CurveTween(curve: curve));
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
                     ),
                   );
                 },

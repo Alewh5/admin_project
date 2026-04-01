@@ -13,9 +13,9 @@ class ConversacionesTab extends StatefulWidget {
   final Proyecto proyecto;
   final String? agentName;
   final int? agentId;
-  
+
   const ConversacionesTab({
-    super.key, 
+    super.key,
     required this.proyecto,
     this.agentName,
     this.agentId,
@@ -30,9 +30,8 @@ class _ConversacionesTabState extends State<ConversacionesTab> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _controller = TextEditingController();
   IO.Socket? socket;
-  
-  // Asumiendo un chat general de proyecto o de la tarea base 
-  int get defaultTaskId => widget.proyecto.id; 
+
+  int get defaultTaskId => widget.proyecto.id;
 
   List<TaskCommentModel> _comments = [];
   int _currentPage = 1;
@@ -57,7 +56,8 @@ class _ConversacionesTabState extends State<ConversacionesTab> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent * 0.9 &&
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent * 0.9 &&
         !_isLoading &&
         _hasMore) {
       _loadComments(loadMore: true);
@@ -78,7 +78,11 @@ class _ConversacionesTabState extends State<ConversacionesTab> {
     setState(() => _isLoading = true);
 
     try {
-      final response = await _kanbanService.getProjectChat(widget.proyecto.id, page: _currentPage, limit: 30);
+      final response = await _kanbanService.getProjectChat(
+        widget.proyecto.id,
+        page: _currentPage,
+        limit: 30,
+      );
       final newComments = response['items'] as List<TaskCommentModel>;
 
       if (mounted) {
@@ -104,17 +108,19 @@ class _ConversacionesTabState extends State<ConversacionesTab> {
   }
 
   void _connectSocket() {
-    socket = IO.io('http://localhost:3000', IO.OptionBuilder()
-        .setTransports(['websocket'])
-        .enableAutoConnect()
-        .build()
+    socket = IO.io(
+      'http://localhost:3000',
+      IO.OptionBuilder()
+          .setTransports(['websocket'])
+          .enableAutoConnect()
+          .build(),
     );
 
     socket?.on('kanban_project_${widget.proyecto.id}_chat', (data) {
       if (!mounted) return;
       final newComment = TaskCommentModel.fromJson(data);
       setState(() {
-        _comments.insert(0, newComment); 
+        _comments.insert(0, newComment);
       });
       _scrollToBottom();
     });
@@ -133,10 +139,14 @@ class _ConversacionesTabState extends State<ConversacionesTab> {
   Future<void> _sendMessage() async {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
-    
+
     _controller.clear();
-    
-    await _kanbanService.addProjectChat(widget.proyecto.id, widget.agentId ?? 1, text);
+
+    await _kanbanService.addProjectChat(
+      widget.proyecto.id,
+      widget.agentId ?? 1,
+      text,
+    );
   }
 
   @override
@@ -144,8 +154,8 @@ class _ConversacionesTabState extends State<ConversacionesTab> {
     return Column(
       children: [
         if (_isLoading && _comments.isEmpty)
-           const Expanded(child: Center(child: CircularProgressIndicator())),
-        
+          const Expanded(child: Center(child: CircularProgressIndicator())),
+
         if (_hasError)
           Expanded(
             child: ErrorState(
@@ -179,8 +189,8 @@ class _ConversacionesTabState extends State<ConversacionesTab> {
                 }
 
                 final comment = _comments[index];
-                // Se utiliza el ID autotenticado dinámico
-                final isMe = comment.userId == (widget.agentId ?? 1); 
+
+                final isMe = comment.userId == (widget.agentId ?? 1);
 
                 return ChatBubble(comment: comment, isMe: isMe);
               },
@@ -204,10 +214,10 @@ class _ConversacionesTabState extends State<ConversacionesTab> {
                 text: 'Enviar',
                 icon: Icons.send,
                 width: 130,
-              )
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

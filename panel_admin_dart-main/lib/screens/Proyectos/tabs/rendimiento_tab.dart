@@ -29,8 +29,10 @@ class _RendimientoTabState extends State<RendimientoTab> {
     });
 
     try {
-      final metrics = await KanbanService().getProjectMetrics(widget.proyecto.id);
-      
+      final metrics = await KanbanService().getProjectMetrics(
+        widget.proyecto.id,
+      );
+
       if (mounted) {
         setState(() {
           _metrics = metrics;
@@ -72,10 +74,30 @@ class _RendimientoTabState extends State<RendimientoTab> {
           const SizedBox(height: 16),
           Row(
             children: [
-              _buildMetricCard('Total Tareas', _metrics!['totalTasks'].toString(), Icons.assignment, Colors.blue),
-              _buildMetricCard('Completadas', _metrics!['completedTasks'].toString(), Icons.check_circle, Colors.green),
-              _buildMetricCard('Atrasadas', _metrics!['overdueTasks'].toString(), Icons.warning, Colors.red),
-              _buildMetricCard('Comentarios', _metrics!['totalComments'].toString(), Icons.comment, Colors.orange),
+              _buildMetricCard(
+                'Total Tareas',
+                _metrics!['totalTasks'].toString(),
+                Icons.assignment,
+                Colors.blue,
+              ),
+              _buildMetricCard(
+                'Completadas',
+                _metrics!['completedTasks'].toString(),
+                Icons.check_circle,
+                Colors.green,
+              ),
+              _buildMetricCard(
+                'Atrasadas',
+                _metrics!['overdueTasks'].toString(),
+                Icons.warning,
+                Colors.red,
+              ),
+              _buildMetricCard(
+                'Comentarios',
+                _metrics!['totalComments'].toString(),
+                Icons.comment,
+                Colors.orange,
+              ),
             ],
           ),
           const SizedBox(height: 24),
@@ -85,19 +107,28 @@ class _RendimientoTabState extends State<RendimientoTab> {
           ),
           const SizedBox(height: 16),
           LinearProgressIndicator(
-            value: (_metrics!['completedTasks'] as int) / (_metrics!['totalTasks'] as int),
+            value:
+                (_metrics!['completedTasks'] as int) /
+                (_metrics!['totalTasks'] as int),
             minHeight: 10,
             backgroundColor: Theme.of(context).dividerColor,
             color: Colors.green,
           ),
           const SizedBox(height: 8),
-          Text('${(((_metrics!['completedTasks'] as int) / (_metrics!['totalTasks'] as int)) * 100).toStringAsFixed(1)}% Completado'),
+          Text(
+            '${(((_metrics!['completedTasks'] as int) / (_metrics!['totalTasks'] as int)) * 100).toStringAsFixed(1)}% Completado',
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildMetricCard(String title, String value, IconData icon, Color color) {
+  Widget _buildMetricCard(
+    String title,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Expanded(
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -107,9 +138,19 @@ class _RendimientoTabState extends State<RendimientoTab> {
             children: [
               Icon(icon, color: color, size: 32),
               const SizedBox(height: 8),
-              Text(value, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 4),
-              Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 12),
+              ),
             ],
           ),
         ),

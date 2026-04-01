@@ -117,8 +117,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 icon: const Icon(Icons.refresh),
                 tooltip: 'Actualizar Historial',
                 onPressed: () {
-                  _agentFilterController
-                      .clear(); // Limpia el filtro si presionas actualizar
+                  _agentFilterController.clear();
                   _loadHistoricalRooms(page: 1);
                 },
               ),
@@ -285,7 +284,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
               });
             }
 
-            // Cargar la primera vez
             if (isLoading && rankingData.isEmpty) loadRanking();
 
             return AlertDialog(

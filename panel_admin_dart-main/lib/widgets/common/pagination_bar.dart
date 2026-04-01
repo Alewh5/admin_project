@@ -1,16 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Barra de paginación reutilizable con botones anterior/siguiente.
-///
-/// Ejemplo:
-/// ```dart
-/// PaginationBar(
-///   currentPage: _currentPage,
-///   totalPages: _totalPages,
-///   onPrevious: () => _loadPage(_currentPage - 1),
-///   onNext: () => _loadPage(_currentPage + 1),
-/// )
-/// ```
 class PaginationBar extends StatelessWidget {
   final int currentPage;
   final int totalPages;
@@ -36,12 +25,7 @@ class PaginationBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
       decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: theme.dividerColor,
-            width: 1,
-          ),
-        ),
+        border: Border(top: BorderSide(color: theme.dividerColor, width: 1)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

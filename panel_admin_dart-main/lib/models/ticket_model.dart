@@ -33,13 +33,21 @@ class Ticket {
       title: json['title'] ?? '',
       description: json['description'],
       status: json['status'] ?? 0,
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'])
+          : null,
       replies: json['ticketReplies'] != null
-          ? (json['ticketReplies'] as List).map((i) => TicketReply.fromJson(i)).toList()
+          ? (json['ticketReplies'] as List)
+                .map((i) => TicketReply.fromJson(i))
+                .toList()
           : null,
       images: json['ticketImages'] != null
-          ? (json['ticketImages'] as List).map((i) => TicketImage.fromJson(i)).toList()
+          ? (json['ticketImages'] as List)
+                .map((i) => TicketImage.fromJson(i))
+                .toList()
           : null,
       room: json['room'],
     );
@@ -74,13 +82,13 @@ class Ticket {
   dynamic get statusIcon {
     switch (status) {
       case 0:
-        return 0xe3ca; // Icons.new_releases
+        return 0xe3ca;
       case 1:
-        return 0xe333; // Icons.hourglass_top
+        return 0xe333;
       case 2:
-        return 0xe156; // Icons.check_circle_outline
+        return 0xe156;
       default:
-        return 0xe31e; // Icons.help_outline
+        return 0xe31e;
     }
   }
 }
@@ -106,7 +114,9 @@ class TicketReply {
       ticketId: json['ticketId'],
       message: json['message'] ?? '',
       agentName: json['agentName'] ?? 'Agente',
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
     );
   }
 }

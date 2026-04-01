@@ -37,9 +37,9 @@ class _EquipoTabState extends State<EquipoTab> {
       });
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error cargando equipo: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error cargando equipo: $e')));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -47,12 +47,11 @@ class _EquipoTabState extends State<EquipoTab> {
   }
 
   void _showAddMemberModal() {
-    // Agrupar usuarios por rol (asumiendo que viene en userData['role']['name'])
-    // Filtrar usuarios que ya están en el equipo
     final teamUserIds = _teamMembers.map((m) => m['id']).toSet();
-    final availableUsers = _allUsers.where((u) => !teamUserIds.contains(u['id'])).toList();
+    final availableUsers = _allUsers
+        .where((u) => !teamUserIds.contains(u['id']))
+        .toList();
 
-    // Extraer roles únicos
     final roles = availableUsers
         .map((u) => u['role']?['name'] as String? ?? 'Sin Rol')
         .toSet()
@@ -60,7 +59,9 @@ class _EquipoTabState extends State<EquipoTab> {
 
     if (roles.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No hay usuarios disponibles para agregar.')),
+        const SnackBar(
+          content: Text('No hay usuarios disponibles para agregar.'),
+        ),
       );
       return;
     }
@@ -77,8 +78,11 @@ class _EquipoTabState extends State<EquipoTab> {
                 .where((u) => (u['role']?['name'] ?? 'Sin Rol') == selectedRole)
                 .toList();
 
-            if (selectedUserId == null || !usersForRole.any((u) => u['id'] == selectedUserId)) {
-              selectedUserId = usersForRole.isNotEmpty ? usersForRole.first['id'] : null;
+            if (selectedUserId == null ||
+                !usersForRole.any((u) => u['id'] == selectedUserId)) {
+              selectedUserId = usersForRole.isNotEmpty
+                  ? usersForRole.first['id']
+                  : null;
             }
 
             return FormDialogLayout(
@@ -86,17 +90,19 @@ class _EquipoTabState extends State<EquipoTab> {
               errorMessage: 'Error al agregar miembro.',
               onSave: () async {
                 if (selectedUserId == null) return false;
-                // Por defecto ponemos el rol como 'Colaborador' o el rol seleccionado
+
                 return await _proyectosService.addTeamMember(
-                  widget.proyecto.id, 
-                  selectedUserId!, 
-                  selectedRole ?? 'Colaborador'
+                  widget.proyecto.id,
+                  selectedUserId!,
+                  selectedRole ?? 'Colaborador',
                 );
               },
               onSuccess: () {
                 _loadData();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Miembro agregado exitosamente.')),
+                  const SnackBar(
+                    content: Text('Miembro agregado exitosamente.'),
+                  ),
                 );
               },
               content: Column(
@@ -108,7 +114,9 @@ class _EquipoTabState extends State<EquipoTab> {
                       border: OutlineInputBorder(),
                     ),
                     value: selectedRole,
-                    items: roles.map((r) => DropdownMenuItem(value: r, child: Text(r))).toList(),
+                    items: roles
+                        .map((r) => DropdownMenuItem(value: r, child: Text(r)))
+                        .toList(),
                     onChanged: (val) {
                       setModalState(() {
                         selectedRole = val;
@@ -122,20 +130,26 @@ class _EquipoTabState extends State<EquipoTab> {
                       border: OutlineInputBorder(),
                     ),
                     value: selectedUserId,
-                    items: usersForRole.map((u) => DropdownMenuItem<int>(
-                      value: u['id'], 
-                      child: Text('${u['firstName']} ${u['lastName']}')
-                    )).toList(),
-                    onChanged: usersForRole.isEmpty ? null : (val) {
-                      setModalState(() {
-                        selectedUserId = val;
-                      });
-                    },
+                    items: usersForRole
+                        .map(
+                          (u) => DropdownMenuItem<int>(
+                            value: u['id'],
+                            child: Text('${u['firstName']} ${u['lastName']}'),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: usersForRole.isEmpty
+                        ? null
+                        : (val) {
+                            setModalState(() {
+                              selectedUserId = val;
+                            });
+                          },
                   ),
                 ],
               ),
             );
-          }
+          },
         );
       },
     );
@@ -146,21 +160,29 @@ class _EquipoTabState extends State<EquipoTab> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Remover del equipo'),
-        content: const Text('¿Estás seguro de remover a este usuario del proyecto? Perderá acceso a los Sprints y Tareas.'),
+        content: const Text(
+          '¿Estás seguro de remover a este usuario del proyecto? Perderá acceso a los Sprints y Tareas.',
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancelar')),
           TextButton(
-            onPressed: () => Navigator.pop(context, true), 
-            child: const Text('Remover', style: TextStyle(color: Colors.red))
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Remover', style: TextStyle(color: Colors.red)),
           ),
         ],
-      )
+      ),
     );
 
     if (confirm != true) return;
 
     setState(() => _isLoading = true);
-    final success = await _proyectosService.removeTeamMember(widget.proyecto.id, userId);
+    final success = await _proyectosService.removeTeamMember(
+      widget.proyecto.id,
+      userId,
+    );
     if (success) {
       _loadData();
     } else {
@@ -191,14 +213,19 @@ class _EquipoTabState extends State<EquipoTab> {
             children: [
               Text(
                 'Equipo Asignado',
-                style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               ElevatedButton.icon(
                 onPressed: _showAddMemberModal,
                 icon: const Icon(Icons.person_add),
                 label: const Text('Agregar Miembro'),
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                 ),
               ),
             ],
@@ -214,7 +241,9 @@ class _EquipoTabState extends State<EquipoTab> {
                     const SizedBox(height: 16),
                     Text(
                       'No hay miembros en este proyecto.',
-                      style: theme.textTheme.titleMedium?.copyWith(color: theme.textTheme.bodySmall?.color),
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: theme.textTheme.bodySmall?.color,
+                      ),
                     ),
                   ],
                 ),
@@ -228,15 +257,29 @@ class _EquipoTabState extends State<EquipoTab> {
                 itemBuilder: (context, index) {
                   final member = _teamMembers[index];
                   return ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     leading: CircleAvatar(
-                      backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+                      backgroundColor: theme.colorScheme.primary.withOpacity(
+                        0.1,
+                      ),
                       child: Text(
-                        member['firstName'].toString().substring(0, 1).toUpperCase(),
-                        style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold),
+                        member['firstName']
+                            .toString()
+                            .substring(0, 1)
+                            .toUpperCase(),
+                        style: TextStyle(
+                          color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    title: Text('${member['firstName']} ${member['lastName']}', style: const TextStyle(fontWeight: FontWeight.bold)),
+                    title: Text(
+                      '${member['firstName']} ${member['lastName']}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     subtitle: Text('${member['role']} • ${member['email']}'),
                     trailing: IconButton(
                       icon: const Icon(Icons.person_remove, color: Colors.red),

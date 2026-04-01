@@ -28,7 +28,7 @@ class _LeftMenuState extends State<LeftMenu> {
     setState(() {
       _isCollapsed = !_isCollapsed;
       if (_isCollapsed) {
-        _isChatMenuExpanded = false; // Collapse submenus when sidebar collapses
+        _isChatMenuExpanded = false;
         _isUtilidadesMenuExpanded = false;
       }
     });
@@ -37,7 +37,7 @@ class _LeftMenuState extends State<LeftMenu> {
   @override
   void initState() {
     super.initState();
-    // Expand menus if active
+
     if (widget.selectedIndex == 1 || widget.selectedIndex == 2) {
       _isChatMenuExpanded = true;
     }
@@ -51,12 +51,12 @@ class _LeftMenuState extends State<LeftMenu> {
     super.didUpdateWidget(oldWidget);
     if (widget.selectedIndex == 1 || widget.selectedIndex == 2) {
       if (!_isCollapsed) {
-         _isChatMenuExpanded = true;
+        _isChatMenuExpanded = true;
       }
     }
     if (widget.selectedIndex == 6 || widget.selectedIndex == 7) {
       if (!_isCollapsed) {
-         _isUtilidadesMenuExpanded = true;
+        _isUtilidadesMenuExpanded = true;
       }
     }
   }
@@ -64,7 +64,9 @@ class _LeftMenuState extends State<LeftMenu> {
   @override
   Widget build(BuildContext context) {
     final bool isRootOrOwner = AppRoles.isRootOrOwner(widget.agentRole);
-    final bool isSupervisorOrHigher = AppRoles.isSupervisorOrHigher(widget.agentRole);
+    final bool isSupervisorOrHigher = AppRoles.isSupervisorOrHigher(
+      widget.agentRole,
+    );
     final theme = Theme.of(context);
 
     return AnimatedContainer(
@@ -73,13 +75,10 @@ class _LeftMenuState extends State<LeftMenu> {
       width: _isCollapsed ? 80 : 250,
       decoration: BoxDecoration(
         color: theme.cardColor,
-        border: Border(
-          right: BorderSide(color: theme.dividerColor, width: 1),
-        ),
+        border: Border(right: BorderSide(color: theme.dividerColor, width: 1)),
       ),
       child: Column(
         children: [
-          // Header / Avatar
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0),
             child: Container(
@@ -95,7 +94,7 @@ class _LeftMenuState extends State<LeftMenu> {
               ),
             ),
           ),
-          // Menu Items
+
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -127,21 +126,27 @@ class _LeftMenuState extends State<LeftMenu> {
               ],
             ),
           ),
-          // Collapse Toggle Button
+
           InkWell(
             onTap: _toggleSidebar,
             child: Container(
               margin: const EdgeInsets.all(12),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+                color: theme.colorScheme.surfaceContainerHighest.withValues(
+                  alpha: 0.5,
+                ),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
-                mainAxisAlignment: _isCollapsed ? MainAxisAlignment.center : MainAxisAlignment.start,
+                mainAxisAlignment: _isCollapsed
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
                 children: [
                   Icon(
-                    _isCollapsed ? Icons.keyboard_double_arrow_right : Icons.keyboard_double_arrow_left,
+                    _isCollapsed
+                        ? Icons.keyboard_double_arrow_right
+                        : Icons.keyboard_double_arrow_left,
                     color: theme.colorScheme.primary.withValues(alpha: 0.7),
                     size: 20,
                   ),
@@ -150,12 +155,14 @@ class _LeftMenuState extends State<LeftMenu> {
                     Text(
                       'Ocultar Menú',
                       style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.6,
+                        ),
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
-                    )
-                  ]
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -187,11 +194,15 @@ class _LeftMenuState extends State<LeftMenu> {
         ),
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
-          color: isSelected ? theme.colorScheme.primary.withValues(alpha: 0.1) : Colors.transparent,
+          color: isSelected
+              ? theme.colorScheme.primary.withValues(alpha: 0.1)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
-          mainAxisAlignment: _isCollapsed ? MainAxisAlignment.center : MainAxisAlignment.start,
+          mainAxisAlignment: _isCollapsed
+              ? MainAxisAlignment.center
+              : MainAxisAlignment.start,
           children: [
             Icon(
               isSelected ? selectedIcon : icon,
@@ -204,14 +215,16 @@ class _LeftMenuState extends State<LeftMenu> {
                 child: Text(
                   label,
                   style: TextStyle(
-                    color: isSelected ? theme.colorScheme.primary : Colors.grey[700],
+                    color: isSelected
+                        ? theme.colorScheme.primary
+                        : Colors.grey[700],
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-            ]
+            ],
           ],
         ),
       ),
@@ -220,31 +233,35 @@ class _LeftMenuState extends State<LeftMenu> {
 
   Widget _buildChatExpandableItem() {
     final theme = Theme.of(context);
-    final isChildSelected = widget.selectedIndex == 1 || widget.selectedIndex == 2;
-    
+    final isChildSelected =
+        widget.selectedIndex == 1 || widget.selectedIndex == 2;
+
     if (_isCollapsed) {
-       // When collapsed, just show a single icon that acts as a dropdown trigger or navigates directly
-       return InkWell(
-         onTap: () {
-           _toggleSidebar();
-           setState(() {
-             _isChatMenuExpanded = true;
-           });
-         },
-         child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: isChildSelected ? theme.colorScheme.primary.withValues(alpha: 0.1) : Colors.transparent,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(
-              isChildSelected ? Icons.chat_bubble_rounded : Icons.chat_bubble_outline_rounded,
-              color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
-              size: 24,
-            ),
-         ),
-       );
+      return InkWell(
+        onTap: () {
+          _toggleSidebar();
+          setState(() {
+            _isChatMenuExpanded = true;
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: BoxDecoration(
+            color: isChildSelected
+                ? theme.colorScheme.primary.withValues(alpha: 0.1)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            isChildSelected
+                ? Icons.chat_bubble_rounded
+                : Icons.chat_bubble_outline_rounded,
+            color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
+            size: 24,
+          ),
+        ),
+      );
     }
 
     return Theme(
@@ -258,25 +275,37 @@ class _LeftMenuState extends State<LeftMenu> {
         },
         tilePadding: const EdgeInsets.symmetric(horizontal: 24),
         leading: Icon(
-          isChildSelected ? Icons.chat_bubble_rounded : Icons.chat_bubble_outline_rounded,
+          isChildSelected
+              ? Icons.chat_bubble_rounded
+              : Icons.chat_bubble_outline_rounded,
           color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
         ),
         title: Text(
           'Chats',
           style: TextStyle(
-            color: isChildSelected ? theme.colorScheme.primary : Colors.grey[700],
+            color: isChildSelected
+                ? theme.colorScheme.primary
+                : Colors.grey[700],
             fontWeight: isChildSelected ? FontWeight.bold : FontWeight.w500,
           ),
         ),
         trailing: Icon(
-           _isChatMenuExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-           color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
+          _isChatMenuExpanded
+              ? Icons.keyboard_arrow_up
+              : Icons.keyboard_arrow_down,
+          color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
         ),
         children: [
           _buildNavItem(
-            icon: widget.unassignedCount > 0 ? Icons.mark_chat_unread_outlined : Icons.forum_outlined,
-            selectedIcon: widget.unassignedCount > 0 ? Icons.mark_chat_unread_rounded : Icons.forum_rounded,
-            label: widget.unassignedCount > 0 ? 'Activos (${widget.unassignedCount})' : 'Activos',
+            icon: widget.unassignedCount > 0
+                ? Icons.mark_chat_unread_outlined
+                : Icons.forum_outlined,
+            selectedIcon: widget.unassignedCount > 0
+                ? Icons.mark_chat_unread_rounded
+                : Icons.forum_rounded,
+            label: widget.unassignedCount > 0
+                ? 'Activos (${widget.unassignedCount})'
+                : 'Activos',
             index: 1,
             indent: 16,
           ),
@@ -294,30 +323,35 @@ class _LeftMenuState extends State<LeftMenu> {
 
   Widget _buildUtilidadesExpandableItem(bool isSupervisorOrHigher) {
     final theme = Theme.of(context);
-    final isChildSelected = widget.selectedIndex == 6 || widget.selectedIndex == 7;
-    
+    final isChildSelected =
+        widget.selectedIndex == 6 || widget.selectedIndex == 7;
+
     if (_isCollapsed) {
-       return InkWell(
-         onTap: () {
-           _toggleSidebar();
-           setState(() {
-             _isUtilidadesMenuExpanded = true;
-           });
-         },
-         child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: isChildSelected ? theme.colorScheme.primary.withValues(alpha: 0.1) : Colors.transparent,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(
-              isChildSelected ? Icons.build_circle_rounded : Icons.build_circle_outlined,
-              color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
-              size: 24,
-            ),
-         ),
-       );
+      return InkWell(
+        onTap: () {
+          _toggleSidebar();
+          setState(() {
+            _isUtilidadesMenuExpanded = true;
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: BoxDecoration(
+            color: isChildSelected
+                ? theme.colorScheme.primary.withValues(alpha: 0.1)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            isChildSelected
+                ? Icons.build_circle_rounded
+                : Icons.build_circle_outlined,
+            color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
+            size: 24,
+          ),
+        ),
+      );
     }
 
     return Theme(
@@ -331,19 +365,25 @@ class _LeftMenuState extends State<LeftMenu> {
         },
         tilePadding: const EdgeInsets.symmetric(horizontal: 24),
         leading: Icon(
-          isChildSelected ? Icons.build_circle_rounded : Icons.build_circle_outlined,
+          isChildSelected
+              ? Icons.build_circle_rounded
+              : Icons.build_circle_outlined,
           color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
         ),
         title: Text(
           'Utilidades',
           style: TextStyle(
-            color: isChildSelected ? theme.colorScheme.primary : Colors.grey[700],
+            color: isChildSelected
+                ? theme.colorScheme.primary
+                : Colors.grey[700],
             fontWeight: isChildSelected ? FontWeight.bold : FontWeight.w500,
           ),
         ),
         trailing: Icon(
-           _isUtilidadesMenuExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-           color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
+          _isUtilidadesMenuExpanded
+              ? Icons.keyboard_arrow_up
+              : Icons.keyboard_arrow_down,
+          color: isChildSelected ? theme.colorScheme.primary : Colors.grey,
         ),
         children: [
           if (isSupervisorOrHigher)
