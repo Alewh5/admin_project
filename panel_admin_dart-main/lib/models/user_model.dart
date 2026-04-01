@@ -4,6 +4,7 @@ class User {
   final String firstName;
   final String lastName;
   final String role;
+  final String? avatar;
   final DateTime? createdAt;
 
   User({
@@ -12,6 +13,7 @@ class User {
     required this.firstName,
     required this.lastName,
     required this.role,
+    this.avatar,
     this.createdAt,
   });
 
@@ -22,6 +24,7 @@ class User {
       firstName: json['firstName'] ?? '',
       lastName: json['lastName'] ?? '',
       role: json['role'] ?? '',
+      avatar: json['avatar'],
       createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
     );
   }
@@ -33,6 +36,7 @@ class User {
       'firstName': firstName,
       'lastName': lastName,
       'role': role,
+      'avatar': avatar,
       'createdAt': createdAt?.toIso8601String(),
     };
   }

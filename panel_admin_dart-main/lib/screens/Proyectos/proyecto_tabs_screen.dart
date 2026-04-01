@@ -21,11 +21,19 @@ class ProyectoTabsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Proyecto: ${proyecto.nombre}'),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: DefaultTabController(
+        length: 5,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            title: Text('Proyecto: ${proyecto.nombre}'),
           bottom: const TabBar(
             tabs: [
               Tab(icon: Icon(Icons.view_kanban), text: 'Tablero'),
@@ -46,6 +54,7 @@ class ProyectoTabsScreen extends StatelessWidget {
             EquipoTab(proyecto: proyecto),
           ],
         ),
+      ),
       ),
     );
   }

@@ -497,7 +497,6 @@ class _ProyectosScreenState extends State<ProyectosScreen> {
                   onPressed: () => _showProyectoDialog(),
                   text: 'Crear Proyecto',
                   icon: Icons.add,
-                  width: 180,
                 )
               : null,
         ),
@@ -583,12 +582,22 @@ class _ProyectosScreenState extends State<ProyectosScreen> {
                 onView: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => ProyectoTabsScreen(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => ProyectoTabsScreen(
                         proyecto: proyecto,
                         agentName: widget.agentName,
                         agentId: widget.agentId,
                       ),
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.easeInOut;
+                        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
                     ),
                   );
                 },

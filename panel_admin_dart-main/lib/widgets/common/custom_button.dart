@@ -7,7 +7,7 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
   final Color? backgroundColor;
   final Color? textColor;
-  final double width;
+  final double? width;
   final double height;
   final double borderRadius;
 
@@ -19,9 +19,9 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.backgroundColor,
     this.textColor,
-    this.width = double.infinity,
-    this.height = 48,
-    this.borderRadius = 12,
+    this.width,
+    this.height = 40,
+    this.borderRadius = 8,
   });
 
   @override
@@ -39,7 +39,7 @@ class CustomButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
         ),
         child: isLoading
             ? const SizedBox(
@@ -61,9 +61,9 @@ class CustomButton extends StatelessWidget {
                   Text(
                     text,
                     style: const TextStyle(
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      letterSpacing: 0.3,
+                      letterSpacing: 0.2,
                     ),
                   ),
                 ],

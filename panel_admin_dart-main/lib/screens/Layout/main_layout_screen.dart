@@ -277,7 +277,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
                                   ? 'Mis proyectos'
                                   : 'Utilidades',
                               style: const TextStyle(
-                                fontSize: 22,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

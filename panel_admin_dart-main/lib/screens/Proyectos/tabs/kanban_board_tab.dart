@@ -9,6 +9,8 @@ import '../../../widgets/common/error_state.dart';
 import '../../../widgets/common/empty_state.dart';
 import '../../../widgets/common/kanban_task_card.dart';
 import '../../../widgets/common/form_dialog_layout.dart';
+import '../../../services/proyectos_service.dart';
+import 'task_detail_modal.dart';
 
 class KanbanBoardTab extends StatefulWidget {
   final Proyecto proyecto;
@@ -34,6 +36,10 @@ class _KanbanBoardTabState extends State<KanbanBoardTab> {
   bool _isLoadingSprints = true;
   bool _hasSprintsError = false;
 
+  // Team State
+  final ProyectosService _proyectosService = ProyectosService();
+  List<dynamic> _projectMembers = [];
+
   // Columns & Tasks State
   List<TaskColumnModel> _columns = [];
   bool _isLoadingBoard = false;
@@ -43,6 +49,16 @@ class _KanbanBoardTabState extends State<KanbanBoardTab> {
   void initState() {
     super.initState();
     _loadSprints();
+    _loadTeamMembers();
+  }
+
+  Future<void> _loadTeamMembers() async {
+    try {
+      final team = await _proyectosService.getProjectTeam(widget.proyecto.id);
+      if (mounted) setState(() => _projectMembers = team);
+    } catch (e) {
+      debugPrint('Error cargando equipo: $e');
+    }
   }
 
   Future<void> _loadSprints() async {
@@ -130,31 +146,25 @@ class _KanbanBoardTabState extends State<KanbanBoardTab> {
   }
 
   void _showAddTaskModal(TaskColumnModel column) {
-    if (_selectedSprint == null) return;
-    final titleCtrl = TextEditingController();
-    final descCtrl = TextEditingController();
+    if (_selectedSprint == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Seleccione un sprint primero.')));
+      return;
+    }
 
     showDialog(
       context: context,
-      builder: (context) => FormDialogLayout(
-        title: 'Nueva Tarea en "${column.nombre}"',
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(controller: titleCtrl, decoration: const InputDecoration(labelText: 'Título corto', border: OutlineInputBorder())),
-            const SizedBox(height: 12),
-            TextField(controller: descCtrl, maxLines: 3, decoration: const InputDecoration(labelText: 'Descripción detallada', border: OutlineInputBorder())),
-          ],
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(24),
+        child: TaskDetailModal(
+          task: null, // Null significa Creación
+          projectMembers: _projectMembers, 
+          onDataChanged: _loadBoard,
+          proyectoId: widget.proyecto.id,
+          sprintId: _selectedSprint!.id,
+          columnId: column.id,
         ),
-        onSave: () async {
-          if (titleCtrl.text.trim().isEmpty) return false;
-          final newTask = await _kanbanService.createTask(widget.proyecto.id, _selectedSprint!.id, column.id, titleCtrl.text.trim(), descCtrl.text.trim());
-          return newTask != null;
-        },
-        onSuccess: _loadBoard,
-        saveText: 'Crear Tarea',
-        errorMessage: 'Error al crear tarea',
-      ),
+      )
     );
   }
 
@@ -553,7 +563,23 @@ class _KanbanBoardTabState extends State<KanbanBoardTab> {
                         opacity: 0.3,
                         child: KanbanTaskCard(task: task),
                       ),
-                      child: KanbanTaskCard(task: task),
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                              backgroundColor: Colors.transparent,
+                              insetPadding: const EdgeInsets.all(24),
+                              child: TaskDetailModal(
+                                task: task, 
+                                projectMembers: _projectMembers, 
+                                onDataChanged: _loadBoard
+                              ),
+                            )
+                          );
+                        },
+                        child: KanbanTaskCard(task: task),
+                      ),
                     );
                   },
                 ),

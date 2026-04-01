@@ -9,21 +9,24 @@ class ScreenHeader extends StatelessWidget {
     super.key,
     required this.title,
     this.actionWidget,
-    this.padding = const EdgeInsets.all(24.0),
+    this.padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: padding,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Wrap(
+        alignment: WrapAlignment.spaceBetween,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: 16,
+        runSpacing: 16,
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          ?actionWidget,
+          if (actionWidget != null) actionWidget!,
         ],
       ),
     );

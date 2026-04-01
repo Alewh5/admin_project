@@ -267,7 +267,6 @@ class _UsersScreenState extends State<UsersScreen> {
             onPressed: _showCreateUserDialog,
             text: 'Crear Agente',
             icon: Icons.add,
-            width: 160,
           ),
         ),
         Expanded(child: _buildUserTable(context)),

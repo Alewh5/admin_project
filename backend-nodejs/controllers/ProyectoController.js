@@ -129,7 +129,7 @@ exports.getTeam = async (req, res) => {
             include: [{
                 model: User,
                 as: 'equipo',
-                attributes: ['id', 'firstName', 'lastName', 'email', 'isActive'],
+                attributes: ['id', 'firstName', 'lastName', 'email', 'isActive', 'avatar'],
                 through: { attributes: ['rolEnProyecto', 'createdAt'] },
                 include: [{ model: Role, as: 'role', attributes: ['name'] }]
             }]
@@ -144,8 +144,9 @@ exports.getTeam = async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            avatar: user.avatar,
             isActive: user.isActive,
-            role: user.role?.name || 'Vazio',
+            role: user.role?.name || 'Vacio',
             rolEnProyecto: user.ProyectoUser?.rolEnProyecto || 'Colaborador',
             assignedAt: user.ProyectoUser?.createdAt
         }));

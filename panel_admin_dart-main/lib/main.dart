@@ -21,8 +21,17 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           navigatorKey: ApiClient.navigatorKey,
           themeMode: currentMode,
+          builder: (context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(0.85)),
+              child: child!,
+            );
+          },
           routes: {'/login': (_) => const LoginScreen()},
           theme: ThemeData(
+            visualDensity: VisualDensity.compact,
             useMaterial3: true,
             brightness: Brightness.light,
             colorScheme: ColorScheme.fromSeed(
@@ -33,6 +42,32 @@ class MyApp extends StatelessWidget {
             ),
             scaffoldBackgroundColor: const Color(0xFFF8FAFC),
             dividerColor: const Color(0xFFE2E8F0),
+            iconTheme: const IconThemeData(size: 20),
+            iconButtonTheme: IconButtonThemeData(
+              style: IconButton.styleFrom(
+                iconSize: 20,
+                minimumSize: const Size(36, 36),
+                padding: const EdgeInsets.all(8),
+              ),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(64, 36),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+              ),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                minimumSize: const Size(64, 36),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+              ),
+            ),
             cardTheme: CardThemeData(
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -54,6 +89,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           darkTheme: ThemeData(
+            visualDensity: VisualDensity.compact,
             useMaterial3: true,
             brightness: Brightness.dark,
             colorScheme: ColorScheme.fromSeed(
@@ -65,6 +101,32 @@ class MyApp extends StatelessWidget {
             ),
             scaffoldBackgroundColor: const Color(0xFF0F172A),
             dividerColor: const Color(0xFF334155),
+            iconTheme: const IconThemeData(size: 20, color: Colors.white),
+            iconButtonTheme: IconButtonThemeData(
+              style: IconButton.styleFrom(
+                iconSize: 20,
+                minimumSize: const Size(36, 36),
+                padding: const EdgeInsets.all(8),
+              ),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(64, 36),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+              ),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                minimumSize: const Size(64, 36),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+              ),
+            ),
             cardTheme: CardThemeData(
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -75,6 +137,7 @@ class MyApp extends StatelessWidget {
             ),
             appBarTheme: const AppBarTheme(
               backgroundColor: Color(0xFF0F172A),
+              foregroundColor: Colors.white,
               elevation: 0,
               centerTitle: false,
               titleTextStyle: TextStyle(
@@ -82,6 +145,10 @@ class MyApp extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+            tabBarTheme: const TabBarThemeData(
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.white54,
             ),
           ),
           home: const LoginScreen(),

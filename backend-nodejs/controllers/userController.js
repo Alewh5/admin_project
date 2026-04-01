@@ -117,11 +117,35 @@ const toggleUserStatus = async (req, res) => {
     }
 };
 
+const uploadAvatar = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const usuario = await User.findByPk(id);
+        
+        if (!usuario) {
+            return res.status(404).json({ error: 'Usuario no encontrado.' });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({ error: 'No se envió ninguna imagen.' });
+        }
+
+        const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+        await usuario.update({ avatar: avatarUrl });
+
+        res.json({ message: 'Avatar actualizado exitosamente.', avatar: avatarUrl, user: usuario });
+    } catch (error) {
+        logger.error(`Error al subir avatar: ${error.message}`, { stack: error.stack });
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+};
+
 module.exports = {
     getUsers,
     getInvitableUsers,
     createUser,
     updateUser,
     deleteUser,
-    toggleUserStatus
+    toggleUserStatus,
+    uploadAvatar
 };

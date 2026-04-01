@@ -32,6 +32,7 @@ module.exports = {
         email: 'admin@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -42,6 +43,7 @@ module.exports = {
         email: 'walejandroh95@gmail.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -52,6 +54,7 @@ module.exports = {
         email: 'supervisor@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -62,6 +65,7 @@ module.exports = {
         email: 'agent@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -72,6 +76,7 @@ module.exports = {
         email: 'developer_sr@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -82,6 +87,7 @@ module.exports = {
         email: 'developer_jr@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -92,6 +98,7 @@ module.exports = {
         email: 'qa@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -102,6 +109,7 @@ module.exports = {
         email: 'designer@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -112,6 +120,7 @@ module.exports = {
         email: 'project_manager@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -122,6 +131,7 @@ module.exports = {
         email: 'dba@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -132,6 +142,7 @@ module.exports = {
         email: 'devops@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -142,6 +153,7 @@ module.exports = {
         email: 'marketing@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -152,6 +164,7 @@ module.exports = {
         email: 'sales@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -162,6 +175,7 @@ module.exports = {
         email: 'hr@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -172,6 +186,7 @@ module.exports = {
         email: 'legal@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -182,9 +197,10 @@ module.exports = {
         email: 'finance@admin.com',
         password: hashedPassword,
         isActive: false,
+        avatar: 'default.png',
         createdAt: new Date(),
         updatedAt: new Date()
-      },
+      }
     ], {});
   },
 

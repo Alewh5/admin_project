@@ -34,8 +34,32 @@ const Task = sequelize.define('Task', {
     allowNull: true
   },
   prioridad: {
-    type: DataTypes.ENUM('Baja', 'Media', 'Alta', 'Urgente'),
-    defaultValue: 'Media'
+    type: DataTypes.STRING,
+    defaultValue: '3'
+  },
+  dificultad: {
+    type: DataTypes.INTEGER,
+    defaultValue: 3
+  },
+  estimacion: {
+    type: DataTypes.DECIMAL(5, 2),
+    allowNull: true
+  },
+  fechaInicioT: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  fechaFinT: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  fechaRealInicio: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  fechaRealFin: {
+    type: DataTypes.DATE,
+    allowNull: true
   },
   estado: {
     type: DataTypes.STRING,

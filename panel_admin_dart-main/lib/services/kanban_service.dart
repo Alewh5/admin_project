@@ -50,6 +50,14 @@ class KanbanService {
     return response.statusCode == 200;
   }
 
+  Future<bool> updateTaskDetails(int taskId, Map<String, dynamic> data) async {
+    final response = await _apiClient.put(
+      Uri.parse('$_baseUrl/kanban/tasks/$taskId'),
+      body: jsonEncode(data),
+    );
+    return response.statusCode == 200;
+  }
+
   // === COMMENTS ===
   Future<Map<String, dynamic>> getTaskComments(int taskId, {int page = 1, int limit = 20}) async {
     final response = await _apiClient.get(
