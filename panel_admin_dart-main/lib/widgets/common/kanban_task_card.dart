@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../models/task_model.dart';
-import 'status_badge.dart';
-
 import '../../config/constants.dart';
 
 class KanbanTaskCard extends StatelessWidget {

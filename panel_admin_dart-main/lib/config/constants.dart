@@ -1,5 +1,5 @@
 class Constants {
-  static const String serverIp = 'localhost:3000';
+  static const String serverIp = '192.168.0.26:3000';
   static const bool isProduction = false;
 
   static String get baseUrl =>
